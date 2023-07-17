@@ -1,0 +1,24 @@
+<IfModule mod_php5.c>
+        # set smtp server
+        # php_value SMTP 49.50.91.63
+</IfModule>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK|OPTIONS) 
+RewriteCond %{REQUEST_METHOD} ^(HEAD|PUT|DELETE)
+RewriteRule .* - [F]
+</IfModule>
+Options -Indexes
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+	Header always append X-Frame-Options SAMEORIGIN
+	Header set X-Content-Type-Options nosniff
+</IfModule> 
+# Add HSTS header
+Header set Strict-Transport-Security "max-age=31536000"
